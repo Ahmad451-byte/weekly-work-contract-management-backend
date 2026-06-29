@@ -20,7 +20,7 @@ describe('WeeklyWorkContract GraphQL E2E', () => {
 
     dataSource = moduleFixture.get(DataSource);
 
-    // run migrations so tables exist
+
     await dataSource.runMigrations();
   });
 
@@ -30,7 +30,7 @@ describe('WeeklyWorkContract GraphQL E2E', () => {
     await dataSource.query(`DELETE FROM weekly_work_contracts`);
     await dataSource.query(`DELETE FROM users`);
 
-    // seed user (matching your schema!)
+
     await dataSource.getRepository(User).save({
       id: 1,
       firstName: 'Test',
@@ -134,7 +134,7 @@ describe('WeeklyWorkContract GraphQL E2E', () => {
 
     const contractId = createRes.body.data.createWeeklyWorkContract.id;
 
-    // 2. DELETE real existing contract
+
     const deleteMutation = `
     mutation {
       deleteWeeklyWorkContract(id: ${contractId})
