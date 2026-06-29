@@ -1,0 +1,50 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  id: Int!
+  firstName: String!
+  lastName: String!
+  email: String!
+  fullName: String!
+}
+
+type WeeklyWorkContract {
+  id: Int!
+  user: User!
+  hoursPerWeek: Float!
+  validFrom: DateTime!
+  validUntil: DateTime
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Query {
+  weeklyWorkContracts(userId: Int!): [WeeklyWorkContract!]!
+  activeWeeklyWorkContract(userId: Int!, date: DateTime!): WeeklyWorkContract
+}
+
+type Mutation {
+  createWeeklyWorkContract(input: CreateWeeklyWorkContractInput!): WeeklyWorkContract!
+  updateWeeklyWorkContract(id: Int!, input: UpdateWeeklyWorkContractInput!): WeeklyWorkContract!
+  deleteWeeklyWorkContract(id: Int!): Boolean!
+}
+
+input CreateWeeklyWorkContractInput {
+  userId: Int!
+  hoursPerWeek: Float!
+  validFrom: DateTime!
+  validUntil: DateTime
+}
+
+input UpdateWeeklyWorkContractInput {
+  hoursPerWeek: Float!
+  validFrom: DateTime!
+  validUntil: DateTime
+}
