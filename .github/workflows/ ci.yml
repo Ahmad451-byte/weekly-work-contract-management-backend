@@ -18,23 +18,37 @@ jobs:
         ports:
           - 3306:3306
         options: >-
-          --health-cmd="mysqladmin ping --silent"
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot --silent"
           --health-interval=10s
           --health-timeout=5s
-          --health-retries=5
+          --health-retries=10
+
+    env:
+      DB_HOST: 127.0.0.1
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: root
+      DB_NAME: weekly_work_contract
+      NODE_ENV: test
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: npm
 
-      - run: npm install
+      - name: Install dependencies
+        run: npm ci
 
-      - run: npm run lint
-        continue-on-error: true
+      - name: Run lint
+        run: npm run lint
 
-      - run: npm run test
+      - name: Run tests
+        run: npm run test
 
-      - run: npm run build
+      - name: Build project
+        run: npm run build
